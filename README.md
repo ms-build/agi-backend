@@ -1,6 +1,6 @@
-# AGI Project - MyBatis Edition
+# AGI Backend
 
-Spring Boot + MyBatis + H2 Database 기반의 AGI 프로젝트입니다.
+Spring Boot + MyBatis + H2 Database 기반의 AGI 백엔드 프로젝트입니다.
 
 ## 기술 스택
 

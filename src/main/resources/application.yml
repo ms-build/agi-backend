@@ -1,6 +1,6 @@
 spring:
   application:
-    name: agi-project
+    name: agi-backend
   
   # H2 Database Configuration
   datasource:

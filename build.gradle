@@ -6,6 +6,7 @@ plugins {
 
 group = 'com.agi'
 version = '0.0.1-SNAPSHOT'
+archivesBaseName = 'agi-backend'
 
 java {
     toolchain {
