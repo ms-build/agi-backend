@@ -24,6 +24,42 @@ spring:
       schema-locations: classpath:db/schema.sql
       data-locations: classpath:db/data.sql
 
+  # Redis Configuration
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+  # Kafka Configuration
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: agi-backend
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  # Cache Configuration
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+
+  # Security Configuration
+  security:
+    jwt:
+      secret: agi-backend-jwt-secret-key-for-development-only
+      expiration: 86400000 # 24 hours
+
 # MyBatis Configuration
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -32,14 +68,99 @@ mybatis:
     map-underscore-to-camel-case: true
     default-fetch-size: 100
     default-statement-timeout: 30
-    
+
+# Elasticsearch Configuration
+elasticsearch:
+  host: localhost
+  port: 9200
+  scheme: http
+  username: 
+  password: 
+
+# Neural Network Configuration
+neural-network:
+  models:
+    base-path: ./models
+    cache-size: 100
+  tensorflow:
+    session-config:
+      allow-soft-placement: true
+      log-device-placement: false
+  deeplearning4j:
+    backend: nd4j-native
+    data-type: FLOAT
+
+# NLP Configuration
+nlp:
+  stanford:
+    models-path: ./nlp-models/stanford
+    pipeline: tokenize,ssplit,pos,lemma,ner,parse,sentiment
+  opennlp:
+    models-path: ./nlp-models/opennlp
+  embeddings:
+    model-path: ./embeddings
+    dimension: 768
+    cache-size: 10000
+
+# Multimodal Configuration
+multimodal:
+  image:
+    max-size: 10MB
+    allowed-formats: jpg,jpeg,png,gif,bmp
+    processing-timeout: 30s
+  audio:
+    max-size: 50MB
+    allowed-formats: wav,mp3,flac,ogg
+    processing-timeout: 60s
+  video:
+    max-size: 100MB
+    allowed-formats: mp4,avi,mov,wmv
+    processing-timeout: 120s
+
+# External APIs Configuration
+external-apis:
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    base-url: https://api.openai.com/v1
+    timeout: 30s
+  google-cloud:
+    credentials-path: ${GOOGLE_CLOUD_CREDENTIALS:}
+    project-id: ${GOOGLE_CLOUD_PROJECT:}
+
 # Logging Configuration
 logging:
   level:
     com.agi: DEBUG
     org.mybatis: DEBUG
-    
+    org.tensorflow: INFO
+    org.deeplearning4j: INFO
+    org.springframework.kafka: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/agi-backend.log
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
 # Server Configuration
 server:
   port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 10
 

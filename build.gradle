@@ -28,12 +28,75 @@ dependencies {
     // Spring Boot Starters
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
     
     // MyBatis
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     
     // Database
     runtimeOnly 'com.h2database:h2'
+    
+    // Machine Learning & Deep Learning
+    implementation 'org.tensorflow:tensorflow-core-platform:0.5.0'
+    implementation 'org.tensorflow:tensorflow-framework:0.5.0'
+    implementation 'org.deeplearning4j:deeplearning4j-core:1.0.0-M2.1'
+    implementation 'org.nd4j:nd4j-native-platform:1.0.0-M2.1'
+    implementation 'org.apache.spark:spark-core_2.12:3.5.0'
+    implementation 'org.apache.spark:spark-sql_2.12:3.5.0'
+    implementation 'org.apache.spark:spark-mllib_2.12:3.5.0'
+    
+    // NLP Libraries
+    implementation 'edu.stanford.nlp:stanford-corenlp:4.5.4'
+    implementation 'edu.stanford.nlp:stanford-corenlp:4.5.4:models'
+    implementation 'org.apache.opennlp:opennlp-tools:2.3.1'
+    implementation 'org.apache.lucene:lucene-core:9.8.0'
+    implementation 'org.apache.lucene:lucene-analyzers-common:8.11.2'
+    
+    // Vector Database & Search
+    implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.17.15'
+    implementation 'co.elastic.clients:elasticsearch-java:8.11.0'
+    implementation 'dev.langchain4j:langchain4j:0.25.0'
+    implementation 'dev.langchain4j:langchain4j-embeddings:0.25.0'
+    
+    // Real-time Processing
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.apache.kafka:kafka-streams'
+    implementation 'io.lettuce:lettuce-core'
+    
+    // HTTP Clients for External APIs
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    
+    // File Processing
+    implementation 'org.apache.tika:tika-core:2.9.1'
+    implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'
+    implementation 'org.apache.commons:commons-imaging:1.0.0-alpha5'
+    
+    // Audio/Video Processing
+    implementation 'org.bytedeco:javacv-platform:1.5.9'
+    implementation 'org.bytedeco:ffmpeg-platform:6.0-1.5.9'
+    
+    // Mathematical Computing
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'org.ejml:ejml-all:0.43.1'
+    
+    // Monitoring & Metrics
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+    
+    // Utilities
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'com.google.guava:guava:32.1.3-jre'
     
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -42,6 +105,10 @@ dependencies {
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:kafka'
+    testImplementation 'org.testcontainers:elasticsearch'
     
     // Test Lombok
     testCompileOnly 'org.projectlombok:lombok'
