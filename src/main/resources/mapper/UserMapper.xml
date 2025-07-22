@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.agi.user.repository.UserRepository">
+
+    <!-- Result Map -->
+    <resultMap id="userResultMap" type="UserVO">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="nickname" column="nickname"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="lastLoginAt" column="last_login_at"/>
+        <result property="isActive" column="is_active"/>
+        <result property="profileImageUrl" column="profile_image_url"/>
+        <result property="preferences" column="preferences"/>
+    </resultMap>
+
+    <!-- SQL Fragments -->
+    <sql id="userColumns">
+        id, username, email, password, first_name, last_name, nickname,
+        created_at, last_login_at, is_active, profile_image_url, preferences
+    </sql>
+
+    <!-- Find All Users -->
+    <select id="findAll" resultMap="userResultMap">
+        SELECT <include refid="userColumns"/>
+        FROM tb_users
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- Find User by ID -->
+    <select id="findById" resultMap="userResultMap">
+        SELECT <include refid="userColumns"/>
+        FROM tb_users
+        WHERE id = #{id}
+    </select>
+
+    <!-- Find User by Username -->
+    <select id="findByUsername" resultMap="userResultMap">
+        SELECT <include refid="userColumns"/>
+        FROM tb_users
+        WHERE username = #{username}
+    </select>
+
+    <!-- Find User by Email -->
+    <select id="findByEmail" resultMap="userResultMap">
+        SELECT <include refid="userColumns"/>
+        FROM tb_users
+        WHERE email = #{email}
+    </select>
+
+    <!-- Find Users by Active Status -->
+    <select id="findByIsActive" resultMap="userResultMap">
+        SELECT <include refid="userColumns"/>
+        FROM tb_users
+        WHERE is_active = #{isActive}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- Insert User -->
+    <insert id="insert" parameterType="UserVO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_users (
+            username, email, password, first_name, last_name, nickname,
+            created_at, is_active, profile_image_url, preferences
+        ) VALUES (
+            #{username}, #{email}, #{password}, #{firstName}, #{lastName}, #{nickname},
+            #{createdAt}, #{isActive}, #{profileImageUrl}, #{preferences}
+        )
+    </insert>
+
+    <!-- Update User -->
+    <update id="update" parameterType="UserVO">
+        UPDATE tb_users
+        SET
+            username = #{username},
+            email = #{email},
+            first_name = #{firstName},
+            last_name = #{lastName},
+            nickname = #{nickname},
+            last_login_at = #{lastLoginAt},
+            is_active = #{isActive},
+            profile_image_url = #{profileImageUrl},
+            preferences = #{preferences}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Delete User by ID -->
+    <delete id="deleteById">
+        DELETE FROM tb_users WHERE id = #{id}
+    </delete>
+
+    <!-- Check if Username Exists -->
+    <select id="existsByUsername" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM tb_users
+        WHERE username = #{username}
+    </select>
+
+    <!-- Check if Email Exists -->
+    <select id="existsByEmail" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM tb_users
+        WHERE email = #{email}
+    </select>
+
+    <!-- Count Total Users -->
+    <select id="count" resultType="long">
+        SELECT COUNT(*)
+        FROM tb_users
+    </select>
+
+</mapper>
+

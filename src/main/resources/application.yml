@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: agi-project
+  
+  # H2 Database Configuration
+  datasource:
+    url: jdbc:h2:mem:agidb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+  # H2 Console Configuration
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+        
+  # SQL Initialization
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/data.sql
+
+# MyBatis Configuration
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.agi.*.vo
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+    
+# Logging Configuration
+logging:
+  level:
+    com.agi: DEBUG
+    org.mybatis: DEBUG
+    
+# Server Configuration
+server:
+  port: 8080
+
