@@ -1,124 +1,183 @@
 # AGI Backend
 
-Spring Boot + MyBatis + H2 Database 기반의 AGI 백엔드 프로젝트입니다.
+🧠 **Artificial General Intelligence Backend System**
 
-## 기술 스택
+Spring Boot 기반의 완전한 AGI 시스템으로, 신경망 모델 관리, 자연어 처리, 대화형 AI, 지식 전이 등의 기능을 제공합니다.
 
-- **Backend**: Spring Boot 3.4.5
-- **Database**: H2 Database (In-Memory)
-- **ORM**: MyBatis 3.0.3
-- **Build Tool**: Gradle 8.5
-- **Java Version**: 17
-- **Testing**: JUnit 5, Mockito, AssertJ
+## 🚀 주요 기능
 
-## 아키텍처 특징
+### 🧠 Neural Network Infrastructure
+- **모델 관리**: 중앙화된 신경망 모델 관리 시스템
+- **추론 엔진**: 동기/비동기 추론 지원
+- **모델 메타데이터**: 성능 지표 및 통계 추적
 
-- **tb_ 접두사**: 모든 테이블명에 tb_ 접두사 사용으로 H2 예약어 충돌 방지
-- **Repository 패턴**: MyBatis Mapper를 Repository로 네이밍하여 DDD 원칙 적용
-- **Service-ServiceImpl 구조**: 인터페이스와 구현체 분리
-- **Builder 패턴**: Lombok을 활용한 불변 객체 생성
-- **ResponseEntity**: 일관된 API 응답 형태
-- **CORS 설정**: Vue.js 프론트엔드 연동 준비
+### 🗣️ Natural Language Processing
+- **텍스트 임베딩**: 텍스트를 벡터로 변환
+- **텍스트 분류**: 의도 및 감정 분석
+- **대화 관리**: 컨텍스트 유지 및 히스토리 관리
 
-## 프로젝트 구조
+### 🔄 Knowledge Transfer
+- **도메인 간 지식 전이**: 다양한 전이 학습 방법 지원
+- **특징 추출**: 학습된 특징의 재사용
+- **지식 증류**: 교사-학생 모델 간 지식 전달
+
+### 🛠️ Infrastructure
+- **Docker 지원**: 완전한 컨테이너화
+- **모니터링**: Prometheus + Grafana
+- **검색**: Elasticsearch 통합
+- **캐싱**: Redis 지원
+- **스트리밍**: Kafka 이벤트 처리
+
+## 🏗️ 기술 스택
+
+### Core Framework
+- **Spring Boot 3.4.5** - 메인 프레임워크
+- **MyBatis 3.0.3** - 데이터베이스 ORM
+- **H2 Database** - 개발용 인메모리 DB
+- **Java 17** - 프로그래밍 언어
+
+### Machine Learning & AI
+- **TensorFlow** - 딥러닝 프레임워크
+- **DeepLearning4J** - Java 기반 딥러닝
+- **Apache Spark** - 대용량 데이터 처리
+- **Stanford CoreNLP** - 자연어 처리
+- **LangChain4j** - LLM 통합
+
+### Infrastructure & DevOps
+- **Docker & Docker Compose** - 컨테이너화
+- **Redis** - 캐싱 및 세션 관리
+- **Elasticsearch** - 검색 및 벡터 저장
+- **Apache Kafka** - 이벤트 스트리밍
+- **Prometheus & Grafana** - 모니터링
+- **MinIO** - 객체 저장소
+
+## 🚀 빠른 시작
+
+### 1. 간단한 실행 (H2 DB만 사용)
+```bash
+./start.sh
+```
+
+### 2. 완전한 인프라와 함께 실행
+```bash
+# 인프라 서비스 시작
+docker-compose up -d
+
+# 애플리케이션 시작
+./start.sh
+```
+
+### 3. 정지
+```bash
+./stop.sh
+```
+
+## 🔗 접속 정보
+
+### 애플리케이션
+- **메인 API**: http://localhost:8080
+- **H2 Console**: http://localhost:8080/h2-console
+- **Health Check**: http://localhost:8080/actuator/health
+- **Metrics**: http://localhost:8080/actuator/prometheus
+
+### 인프라 서비스
+- **Elasticsearch**: http://localhost:9200
+- **Kibana**: http://localhost:5601
+- **Redis**: localhost:6379
+- **Kafka**: localhost:9092
+- **MinIO**: http://localhost:9001 (admin/admin123)
+- **Prometheus**: http://localhost:9090
+- **Grafana**: http://localhost:3000 (admin/admin123)
+
+## 📊 API 엔드포인트
+
+### User Management
+- `GET /api/users` - 전체 사용자 조회
+- `POST /api/users` - 사용자 생성
+- `GET /api/users/{id}` - 특정 사용자 조회
+- `PUT /api/users/{id}` - 사용자 수정
+- `DELETE /api/users/{id}` - 사용자 삭제
+
+### Neural Network Models
+- `GET /api/models` - 등록된 모델 목록
+- `POST /api/models/{modelId}/predict` - 모델 추론 실행
+- `GET /api/models/{modelId}/metadata` - 모델 메타데이터
+- `GET /api/models/health` - 시스템 상태
+
+### Conversation Management
+- `POST /api/conversations` - 새 대화 시작
+- `POST /api/conversations/{id}/turns` - 대화 턴 추가
+- `GET /api/conversations/{id}/history` - 대화 히스토리
+
+### Knowledge Transfer
+- `POST /api/transfer` - 지식 전이 시작
+- `GET /api/transfer/{sessionId}` - 전이 세션 상태
+- `GET /api/transfer/sessions` - 활성 세션 목록
+
+## 🏗️ 프로젝트 구조
 
 ```
 src/main/java/com/agi/
-├── common/
-│   ├── config/          # 설정 클래스
-│   ├── exception/       # 예외 처리
-│   └── response/        # 응답 형태
-├── user/
-│   ├── vo/             # Value Object
-│   ├── repository/     # Repository 인터페이스
-│   ├── service/        # Service 인터페이스 및 구현체
-│   └── controller/     # REST Controller
-└── [other domains]/
-
-src/main/resources/
-├── mapper/             # MyBatis XML 매퍼
-├── db/                 # DB 스키마 및 초기 데이터
-└── application.yml     # 설정 파일
+├── neural/          # 신경망 코어 시스템
+│   ├── core/        # 기본 인터페이스 및 관리자
+│   ├── models/      # 모델 구현체
+│   └── inference/   # 추론 엔진
+├── nlp/             # 자연어 처리
+│   ├── processing/  # 텍스트 처리
+│   ├── analysis/    # 텍스트 분석
+│   ├── generation/  # 텍스트 생성
+│   └── understanding/ # 자연어 이해
+├── learning/        # 학습 시스템
+│   ├── transfer/    # 지식 전이
+│   ├── reinforcement/ # 강화 학습
+│   └── adaptive/    # 적응형 학습
+├── multimodal/      # 멀티모달 처리
+│   ├── image/       # 이미지 처리
+│   ├── audio/       # 오디오 처리
+│   └── video/       # 비디오 처리
+└── common/          # 공통 유틸리티
 ```
 
-## 데이터베이스 스키마
+## 🧪 개발 및 테스트
 
-### 주요 테이블
-- `tb_users`: 사용자 정보
-- `tb_roles`: 역할 정보
-- `tb_permissions`: 권한 정보
-- `tb_user_roles`: 사용자-역할 매핑
-- `tb_role_permissions`: 역할-권한 매핑
-- `tb_conversation`: 대화 정보
-- `tb_message`: 메시지 정보
-- `tb_knowledge`: 지식 베이스
-- `tb_tool`: 도구 정보
-- `tb_plan`: 계획 정보
-- `tb_sandbox`: 샌드박스 환경
-
-## 실행 방법
-
-### 1. 프로젝트 빌드
+### 빌드
 ```bash
-./gradlew build
+./gradlew clean build
 ```
 
-### 2. 애플리케이션 실행
-```bash
-./gradlew bootRun
-```
-
-### 3. H2 콘솔 접속
-- URL: http://localhost:8080/h2-console
-- JDBC URL: jdbc:h2:mem:agidb
-- Username: sa
-- Password: (비워둠)
-
-## API 엔드포인트
-
-### User API
-- `GET /api/users` - 모든 사용자 조회
-- `GET /api/users/{id}` - ID로 사용자 조회
-- `GET /api/users/username/{username}` - 사용자명으로 조회
-- `GET /api/users/active` - 활성 사용자 조회
-- `POST /api/users` - 새 사용자 생성
-- `PUT /api/users/{id}` - 사용자 정보 수정
-- `DELETE /api/users/{id}` - 사용자 삭제
-- `GET /api/users/check-username/{username}` - 사용자명 중복 확인
-- `GET /api/users/check-email/{email}` - 이메일 중복 확인
-- `GET /api/users/count` - 전체 사용자 수 조회
-
-## 테스트
-
+### 테스트 실행
 ```bash
 ./gradlew test
 ```
 
-## 개발 가이드
+### Docker 이미지 빌드
+```bash
+docker build -t agi-backend .
+```
 
-### 새 도메인 추가 시
-1. `src/main/java/com/agi/{domain}/` 디렉토리 생성
-2. VO, Repository, Service, Controller 클래스 작성
-3. `src/main/resources/mapper/{Domain}Mapper.xml` 매퍼 파일 작성
-4. 테스트 코드 작성
+## 📈 모니터링
 
-### 코딩 컨벤션
-- Lombok @Builder 패턴 사용
-- Setter 메서드 지양
-- Repository 패턴 네이밍
-- ResponseEntity 사용
-- 테스트 코드 필수 작성
+시스템 상태는 다음 엔드포인트에서 확인할 수 있습니다:
 
-## 향후 계획
+- **Health**: `/actuator/health`
+- **Metrics**: `/actuator/metrics`
+- **Prometheus**: `/actuator/prometheus`
 
-- [ ] 나머지 도메인 구현 (Conversation, Knowledge, Tool, Plan, Sandbox)
-- [ ] Spring Security 적용
-- [ ] JWT 인증 구현
-- [ ] Vue.js 프론트엔드 연동
-- [ ] Docker 컨테이너화
-- [ ] CI/CD 파이프라인 구축
+Grafana 대시보드에서 실시간 모니터링이 가능합니다.
 
-## 라이선스
+## 🤝 기여하기
 
-MIT License
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+
+## 🆘 지원
+
+문제가 발생하면 GitHub Issues를 통해 문의해주세요.
 
